@@ -15,28 +15,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             background: #f9f9f9;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            text-align: center;
+            margin-top: 20px;
         }
 
         h1 {
-            color: #2c5937; /* Tom de verde escuro/médio para títulos */
+            color: #2c5937;
+            text-align: center;
             margin-bottom: 10px;
         }
 
-        p {
-            font-size: 16px;
-            line-height: 1.5;
+        .subtitulo {
+            text-align: center;
+            font-size: 15px;
+            color: #555555;
             margin-bottom: 25px;
         }
 
@@ -51,21 +51,34 @@
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
+            display: block;
+            margin: 0 auto 25px auto;
         }
 
         .btn-acao:hover {
             background-color: #badbcc;
         }
 
-        .instrucao-terminal {
-            margin-top: 20px;
+        /* Área de exibição dos resultados em tela */
+        .relatorio-box {
+            background: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            padding: 20px;
+            white-space: pre-wrap; /* Mantém a formatação de quebra de linha */
+            font-family: monospace;
             font-size: 14px;
-            color: #555555;
-            background: #e2f0d9;
+            color: #222222;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .destaque-verde {
+            background-color: #e2f0d9;
             padding: 10px;
             border-radius: 4px;
+            margin-top: 15px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -73,16 +86,152 @@
 
     <div class="container">
         <h1>SkillMatch JS</h1>
-        <p>Sistema de análise de compatibilidade de currículo e vagas. O script principal está configurado para ser executado e exibir os resultados no console do navegador e do terminal.</p>
+        <p class="subtitulo">Análise de compatibilidade profissional integrada ao sistema.</p>
         
-        <a href="#" class="btn-acao" onclick="alert('Abra o console do navegador (F12) para ver o relatório completo executado pelo script!')">Ver Relatório no Console</a>
+        <button class="btn-acao" onclick="executarSkillMatch()">Carregar e Analisar Vagas</button>
 
-        <div class="instrucao-terminal">
-            <small>💡 Dica: No ambiente Node.js, execute via terminal: <strong>node skillmatch.js</strong></small>
+        <!-- Caixa onde o relatório será impresso -->
+        <div id="resultado" class="relatorio-box">Clique no botão acima para carregar os dados do servidor simulado...</div>
+
+        <div class="destaque-verde">
+            <small>💡 <strong>Dica técnica:</strong> O script também imprime os logs completos no console do navegador (Pressione F12).</small>
         </div>
     </div>
 
-    <!-- Link para chamar o arquivo JavaScript do projeto -->
-    <script src="skillmatch.js"></script>
+    <!-- Script refatorado para suportar exibição na tela -->
+    <script>
+        // Classes e dados do sistema
+        const candidato = {
+          nome: "Simone Penido",
+          areaInteresse: "Desenvolvimento de Software / Análise de Sistemas",
+          experienciaAnos: 2,
+          habilidades: ["JavaScript", "HTML5", "CSS3", "Git", "SQL", "Banco de Dados"]
+        };
+
+        class Vaga {
+          constructor(id, empresa, cargo, requisitos) {
+            this.id = id;
+            this.empresa = empresa;
+            this.cargo = cargo;
+            this.requisitos = requisitos;
+          }
+          detalhesVaga() {
+            return `${this.cargo} na ${this.empresa} - Requisitos: ${this.requisitos.join(", ")}`;
+          }
+        }
+
+        class VagaRemota extends Vaga {
+          constructor(id, empresa, cargo, requisitos, plataformaReuniao) {
+            super(id, empresa, cargo, requisitos);
+            this.plataformaReuniao = plataformaReuniao; 
+          }
+          detalhesVaga() {
+            return `[Remota via ${this.plataformaReuniao}] ${super.detalhesVaga()}`;
+          }
+        }
+
+        const listaVagasIniciais = [
+          new Vaga(1, "TechCorp Soluções", "Desenvolvedora Front-End Júnior", ["JavaScript", "HTML5", "CSS3", "React"]),
+          new Vaga(2, "DataSys Consultoria", "Analista de Sistemas", ["SQL", "Banco de Dados", "JavaScript", "Modelagem de Dados"]),
+          new VagaRemota(3, "Inovação Global", "Analista de Produto", ["Gestão de Projetos", "SQL", "Git", "Comunicação"], "Microsoft Teams")
+        ];
+
+        function simularCarregamentoVagas() {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(listaVagasIniciais);
+            }, 1000);
+          });
+        }
+
+        function criarContadorRelatorios() {
+          let contador = 0;
+          return function() {
+            contador++;
+            return contador;
+          };
+        }
+        const registrarRelatorio = criarContadorRelatorios();
+
+        function exibirComMensagemPersonalizada(mensagem, callbackFormato) {
+          callbackFormato(mensagem);
+        }
+
+        // Função principal adaptada para atualizar o HTML na tela
+        async function executarSkillMatch() {
+          const caixaResultado = document.getElementById("resultado");
+          caixaResultado.textContent = "Conectando ao servidor para carregar as vagas...\n";
+
+          try {
+            const vagas = await simularCarregamentoVagas();
+            let saidaTexto = `=== RELATÓRIO DE COMPATIBILIDADE: ${candidato.nome.toUpperCase()} ===\n\n`;
+
+            let melhorVaga = null;
+            let maiorPercentual = -1;
+
+            for (let i = 0; i < vagas.length; i++) {
+              const vagaAtual = vagas[i];
+
+              const habilidadesFaltantes = vagaAtual.requisitos.filter(
+                req => !candidato.habilidades.includes(req)
+              );
+
+              const totalRequisitos = vagaAtual.requisitos.length;
+              const habilidadesAtendidas = totalRequisitos - habilidadesFaltantes.length;
+              const percentual = Math.round((habilidadesAtendidas / totalRequisitos) * 100);
+
+              let classificacao = "";
+              if (percentual >= 80) {
+                classificacao = "Alta compatibilidade";
+              } else if (percentual >= 50) {
+                classificacao = "Média compatibilidade";
+              } else {
+                classificacao = "Baixa compatibilidade";
+              }
+
+              let recomendacaoEstudo = habilidadesFaltantes.length > 0 
+                ? `Prioridade de estudo: Focar em aprender '${habilidadesFaltantes[0]}'.`
+                : `Perfil totalmente alinhado! Nenhuma habilidade pendente.`;
+
+              saidaTexto += `Vaga ${i + 1}: ${vagaAtual.detalhesVaga()}\n`;
+              saidaTexto += `> Compatibilidade: ${percentual}% (${classificacao})\n`;
+              saidaTexto += `> Habilidades Faltantes: ${habilidadesFaltantes.length > 0 ? habilidadesFaltantes.join(", ") : "Nenhuma"}\n`;
+              saidaTexto += `> ${recomendacaoEstudo}\n`;
+              saidaTexto += `--------------------------------------------------\n`;
+
+              if (percentual > maiorPercentual) {
+                maiorPercentual = percentual;
+                melhorVaga = vagaAtual;
+              }
+            }
+
+            const percentuaisArray = vagas.map(vaga => {
+              const faltam = vaga.requisitos.filter(r => !candidato.habilidades.includes(r));
+              return Math.round(((vaga.requisitos.length - faltam.length) / vaga.requisitos.length) * 100);
+            });
+
+            const mediaGeral = Math.round(percentuaisArray.reduce((acc, val) => acc + val, 0) / vagas.length);
+
+            saidaTexto += `\n[DESTAQUE DE ADERÊNCIA - RF06]\n`;
+            saidaTexto += `A vaga com maior aderência ao seu perfil é: ${melhorVaga.cargo} (${melhorVaga.empresa}) com ${maiorPercentual}% de compatibilidade!\n`;
+            saidaTexto += `Média geral de compatibilidade nas vagas analisadas: ${mediaGeral}%\n\n`;
+
+            exibirComMensagemPersonalizada(
+              `Relatório #${registrarRelatorio()} gerado com sucesso.`, 
+              msg => {
+                saidaTexto += `[LOG DO SISTEMA] ${msg}`;
+                console.log(`[LOG DO SISTEMA] ${msg}`);
+              }
+            );
+
+            // Insere o texto completo formatado dentro da div na tela
+            caixaResultado.textContent = saidaTexto;
+
+          } catch (erro) {
+            caixaResultado.textContent = "Erro crítico na execução do sistema: " + erro;
+            console.error(erro);
+          }
+        }
+    </script>
 </body>
 </html>
