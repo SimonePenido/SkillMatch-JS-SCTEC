@@ -22,7 +22,7 @@ skillmatch-js/
 ├── index.html        # Interface web com estilos CSS internos
 ├── skillmatch.js      # Script principal contendo a lógica da aplicação
 └── README.md          # Documentação do projeto
-
+```
 ---
 
 ## 📐 Decisões de Projeto
