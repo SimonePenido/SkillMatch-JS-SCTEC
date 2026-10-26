@@ -12,6 +12,19 @@ Sistema desenvolvido em JavaScript para análise de compatibilidade entre o perf
 
 ---
 
+---
+
+## 🛠️ Estrutura do Projeto
+
+```text
+skillmatch-js/
+│
+├── index.html        # Interface web com estilos CSS internos
+├── skillmatch.js      # Script principal contendo a lógica da aplicação
+└── README.md          # Documentação do projeto
+
+---
+
 ## 📐 Decisões de Projeto
 
 ### 1\. Regra de Cálculo de Compatibilidade
@@ -52,7 +65,8 @@ Na web moderna, o front-end solicita dados a um servidor externo de forma assín
 -   **Live Server:** Execução da página HTML em um servidor local com reload automático.
     
 
-## 🔗 Links Obrigatórios
+## 🔗 Link
 
 -   **Repositório GitHub:** \[https://github.com/SimonePenido/SkillMatch-JS-SCTEC\]
+
     
