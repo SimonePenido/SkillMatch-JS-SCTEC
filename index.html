@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillMatch JS - Avaliação M1.1</title>
+    <style>
+        /* Estilos Globais */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c5937; /* Tom de verde escuro/médio para títulos */
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Botão com tom de verde claro */
+        .btn-acao {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-acao:hover {
+            background-color: #badbcc;
+        }
+
+        .instrucao-terminal {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555555;
+            background: #e2f0d9;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>SkillMatch JS</h1>
+        <p>Sistema de análise de compatibilidade de currículo e vagas. O script principal está configurado para ser executado e exibir os resultados no console do navegador e do terminal.</p>
+        
+        <a href="#" class="btn-acao" onclick="alert('Abra o console do navegador (F12) para ver o relatório completo executado pelo script!')">Ver Relatório no Console</a>
+
+        <div class="instrucao-terminal">
+            <small>💡 Dica: No ambiente Node.js, execute via terminal: <strong>node skillmatch.js</strong></small>
+        </div>
+    </div>
+
+    <!-- Link para chamar o arquivo JavaScript do projeto -->
+    <script src="skillmatch.js"></script>
+</body>
+</html>
