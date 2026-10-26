@@ -56,6 +56,3 @@ Na web moderna, o front-end solicita dados a um servidor externo de forma assín
 
 -   **Repositório GitHub:** \[https://github.com/SimonePenido/SkillMatch-JS-SCTEC\]
     
--   **Quadro Kanban:** \[Link do Kanban\]
-    
--   **Vídeo de Demonstração:** \[Link do Vídeo no Google Drive / YouTube\]
