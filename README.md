@@ -12,15 +12,6 @@ Sistema desenvolvido em JavaScript para análise de compatibilidade entre o perf
 
 ---
 
-## 🛠️ Como executar o projeto (Passo a Passo)
-
-1. Certifique-se de ter o [Node.js](https://nodejs.org/) instalado em sua máquina.
-2. Clone este repositório ou baixe os arquivos para o seu computador.
-3. Abra a pasta do projeto no **VS Code**.
-4. No terminal integrado, execute o comando:
-   ```bash
-   node skillmatch.js
-
 ## 📐 Decisões de Projeto
 
 ### 1\. Regra de Cálculo de Compatibilidade
@@ -57,11 +48,13 @@ Na web moderna, o front-end solicita dados a um servidor externo de forma assín
 -   **Prettier:** Formatação de código.
     
 -   **GitLens:** Controle de versão visual.
+
+-   **Live Server:** Execução da página HTML em um servidor local com reload automático.
     
 
 ## 🔗 Links Obrigatórios
 
--   **Repositório GitHub:** \[Link do Repositório\]
+-   **Repositório GitHub:** \[https://github.com/SimonePenido/SkillMatch-JS-SCTEC\]
     
 -   **Quadro Kanban:** \[Link do Kanban\]
     
